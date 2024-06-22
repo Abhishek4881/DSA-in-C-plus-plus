@@ -150,7 +150,7 @@ void deleteNode(Node *nod)
     //     free (nod);
     //     return;
     // }
-    
+
     if (front == nullptr)
     {
         prev->next = nullptr;
@@ -169,10 +169,91 @@ void deleteNode(Node *nod)
     return;
 }
 
+Node *InsertBeforeHead(Node *head, int val)
+{
+
+    Node *newHead = new Node(val, head, nullptr);
+
+    head->back = newHead;
+    return newHead;
+}
+
+Node *InsertBeforeTail(Node *head, int val)
+{
+
+    if (head->next == nullptr)
+    {
+        return InsertBeforeHead(head, val);
+    }
+
+    Node *temp = head;
+    while (temp->next->next != nullptr)
+    {
+
+        temp = temp->next;
+    }
+
+    Node *tail = temp->next;
+    Node *newNode = new Node(val, tail, temp);
+    temp->next = newNode;
+    tail->back = newNode;
+    return head;
+}
+
+Node *InsertBeforeKth(Node *head, int k, int val)
+{
+
+    if (head->next == nullptr)
+    {
+
+        if (k == 1)
+            return InsertBeforeHead(head, val);
+        else
+            cout << "invalid";
+    }
+
+    if (k == 1)
+        return InsertBeforeHead(head, val);
+
+    Node *temp = head;
+    int count = 1;
+
+    if (head == nullptr)
+    {
+    }
+
+    while (temp != nullptr && count != k - 1)
+    {
+
+        temp = temp->next;
+        count++;
+    }
+
+    Node *Kth = temp->next;
+    Node *newNode = new Node(val, Kth, temp);
+    temp->next = newNode;
+    Kth->back = newNode;
+
+    return head;
+}
+
+void InsertBeforeNode(Node *nod, int val)
+{
+
+    Node *prev = nod->back;
+
+    Node *newNode = new Node(val, nod, prev);
+    prev->next = newNode;
+    nod->back = newNode;
+
+    return;
+}
+
 int main()
 {
 
     vector<int> arr{5, 9, 4, 8, 2};
+    // vector<int> arr{5};
 
     Node *head = Arr2DLL(arr);
     Print(head);
@@ -186,9 +267,27 @@ int main()
     // Print(head);
     // cout << head->next->next->back->data;
 
-    
-    deleteNode(head->next);
-    // deleteNode(head->next->next);
-    Print(head);
-    
+    // deleteNode(head->next);
+    // // deleteNode(head->next->next);
+    // Print(head);
+
+    // head=InsertBeforeHead(head,10);
+    // Print(head);
+
+    // InsertBeforeHead(head, 10);
+    // Print(head);
+    // Node* newHead=head->back;
+    // Print(newHead);
+
+    // cout << head->next->next->next->next->back->data << endl;
+    // cout << head->next->next->next->next->next->back->data << endl;
+
+    // head = InsertBeforeKth(head, 4, 10);
+    // Print(head);
+
+    //  InsertBeforeNode(head->next,10);
+    //  Print(head);
+    //  cout << head->next->next->back->data<< endl;
+
+    return 0;
 }
