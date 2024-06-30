@@ -17,76 +17,137 @@
 //             fast=fast->next->next;
 
 //             if(slow==fast) return true;
-//         } 
+//         }
 
 //         return false;
-        
-//     }
 
+//     }
 
 // LENGTH OF LOOP.....
 
-// 1.)BRUTE FORCE USING MAP 
+// 1.)BRUTE FORCE USING MAP
 
 // int countNodesinLoop(struct Node *head)
 // {
 //     // Code here
-//       Node* temp = head;  
-    
-    
-//     unordered_map<Node*, int> nodeMap;  
+//       Node* temp = head;
+
+//     unordered_map<Node*, int> nodeMap;
 //     int timer=1;
 
-   
 //     while (temp != nullptr) {
-       
+
 //         if (nodeMap.find(temp) != nodeMap.end()) {
 //             int val=nodeMap[temp];
 //             return (timer-val);
 //         }
-       
+
 //         nodeMap[temp] = timer;
 //         timer++;
-        
-       
-//         temp = temp->next;  
+
+//         temp = temp->next;
 //     }
 
-    
 //     return 0;
 // }
 
-//2.) OPTIMAL APPROACH USING FLOYDS CYCLE /TORTOISE & HARE
+// 2.) OPTIMAL APPROACH USING FLOYDS CYCLE /TORTOISE & HARE
 
 // int countNodesinLoop(struct Node *head)
 // {
 //     // Code here
-    
+
 //     Node* slow=head;
 //     Node* fast=head;
-    
-    
+
 //     while(fast!=NULL && fast->next!=NULL){
-        
+
 //         slow=slow->next;
 //         fast=fast->next->next;
-        
-        
+
 //         if(slow==fast){
-            
+
 //             fast=fast->next;
 //             int Length=1;
-            
+
 //             while(slow!=fast){
 //                 Length++;
-                
+
 //                 fast=fast->next;
 //             }
-            
+
 //             return Length;
 //         }
 //     }
-    
+
 //     return 0;
-    
+
 // }
+
+// ## STARTING NODE OF LOOP
+
+ListNode *detectCycle(ListNode *head)
+{
+
+    ListNode *slow = head;
+    ListNode *fast = head;
+
+    while (fast != NULL && fast->next != NULL)
+    {
+
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if (slow == fast)
+        {
+
+            slow = head;
+
+            while (slow != fast)
+            {
+
+                slow = slow->next;
+                fast = fast->next;
+            }
+
+            return slow;
+        }
+    }
+
+    return nullptr;
+}
+
+// LENGTH OF LOOP
+
+int countNodesinLoop(struct Node *head)
+{
+    // Code here
+
+    Node *slow = head;
+    Node *fast = head;
+
+    while (fast != NULL && fast->next != NULL)
+    {
+
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if (slow == fast)
+        {
+
+            fast = fast->next;
+            int Length = 1;
+
+            while (slow != fast)
+            {
+                Length++;
+
+                fast = fast->next;
+            }
+
+            return Length;
+        }
+    }
+
+    return 0;
+}
